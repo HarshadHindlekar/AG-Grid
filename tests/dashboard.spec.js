@@ -75,3 +75,26 @@ test("employee directory filters, pagination, profile, columns and export", asyn
     ),
   ).toBeTruthy();
 });
+
+test("reopens an empty column filter with its value editable", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:5173");
+  const employeeHeader = page
+    .locator(".ag-header-cell")
+    .filter({ hasText: "Employee" });
+  const filterButton = employeeHeader.locator(".ag-header-cell-filter-button");
+
+  await filterButton.click();
+  await page.getByLabel("Filter Value").first().fill("no matching employee");
+  await expect(
+    page.getByText("No employees match your filters."),
+  ).toBeVisible();
+
+  await filterButton.click();
+  const reopenedFilter = page.getByLabel("Filter Value").first();
+  await expect(reopenedFilter).toBeVisible();
+  await expect(reopenedFilter).toHaveValue("no matching employee");
+  await reopenedFilter.fill("John");
+  await expect(reopenedFilter).toHaveValue("John");
+});
