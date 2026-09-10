@@ -23,3 +23,13 @@ body {
 .ag-popup-child {
   max-height: 80vh;
 }
+
+.ag-overlay,
+.ag-overlay-panel,
+.ag-overlay-wrapper {
+  pointer-events: none !important;
+}
+
+.ag-overlay-wrapper > * {
+  pointer-events: auto !important;
+}

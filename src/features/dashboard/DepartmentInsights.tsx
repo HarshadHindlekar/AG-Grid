@@ -41,7 +41,7 @@ export function DepartmentInsights({
 
   return (
     <section className="mb-[25px] grid grid-cols-2 gap-[19px] max-[900px]:gap-3 max-[600px]:grid-cols-1 min-[1500px]:mb-7">
-      <article className="rounded-[9px] border border-[#e1e7dc] bg-white p-5 transition-shadow duration-200 hover:shadow-md">
+      <article className="rounded-[9px] border border-[#e1e7dc] bg-white p-5 transition-shadow duration-200 hover:shadow-md max-[600px]:p-3.5">
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-[13px] font-[650] tracking-[-.1px]">
@@ -55,7 +55,7 @@ export function DepartmentInsights({
             {departmentCount} departments
           </span>
         </div>
-        <div className="my-[23px] flex items-center justify-center gap-[34px] max-[1150px]:gap-[17px] max-[900px]:gap-3 max-[600px]:gap-[30px] min-[1500px]:gap-12">
+        <div className="my-[23px] flex items-center justify-center gap-[34px] max-[1150px]:gap-[17px] max-[900px]:gap-3 max-[600px]:my-4 max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-4 min-[1500px]:gap-12">
           <div
             className="grid h-[145px] w-[145px] shrink-0 rotate-[-90deg] place-items-center rounded-full max-[1150px]:h-[120px] max-[1150px]:w-[120px] max-[900px]:h-[100px] max-[900px]:w-[100px] max-[600px]:h-[125px] max-[600px]:w-[125px]"
             role="img"
@@ -71,7 +71,7 @@ export function DepartmentInsights({
               </span>
             </div>
           </div>
-          <div className="max-w-[270px] flex-1">
+          <div className="max-w-[270px] flex-1 max-[600px]:w-full max-[600px]:max-w-full">
             {departments.map((d) => (
               <button
                 key={d}
@@ -114,7 +114,7 @@ export function DepartmentInsights({
           </div>
         </div>
       </article>
-      <article className="rounded-[9px] border border-[#e1e7dc] bg-white p-5 transition-shadow duration-200 hover:shadow-md">
+      <article className="rounded-[9px] border border-[#e1e7dc] bg-white p-5 transition-shadow duration-200 hover:shadow-md max-[600px]:p-3.5">
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-[13px] font-[650] tracking-[-.1px]">
@@ -143,7 +143,7 @@ export function DepartmentInsights({
                 className="flex items-center gap-3 text-[10px] text-[#89917f]"
                 key={d}
               >
-                <span className="w-[94px] max-[900px]:w-20 max-[900px]:text-[9px]">
+                <span className="w-[94px] max-[900px]:w-20 max-[900px]:text-[9px] max-[600px]:w-[80px] truncate">
                   {d === "HR" ? "Human Resources" : d}
                 </span>
                 <div className="h-[7px] flex-1 overflow-hidden rounded-[2px] bg-[#f3f5ee]">

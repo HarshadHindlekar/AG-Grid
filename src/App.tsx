@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { ChevronRight, Download } from "lucide-react";
+import { ChevronRight, Download, LoaderCircle } from "lucide-react";
 import type { Employee } from "./types/employee";
 import type { DashboardTab } from "./types/navigation";
 import { Sidebar } from "./components/layout/Sidebar";
@@ -85,8 +85,8 @@ export default function App() {
           </span>
         </header>
         <main className="mx-auto max-w-[1680px] px-[34px] pb-[18px] pt-[31px] max-[1150px]:px-[22px] max-[1150px]:py-[25px] max-[600px]:px-[14px] max-[600px]:py-[22px] min-[1500px]:pt-[38px]">
-          <div className="mb-[27px] flex items-center justify-between gap-5 max-[600px]:flex-wrap max-[600px]:items-start max-[600px]:gap-2.5">
-            <div>
+          <div className="mb-[27px] flex items-center justify-between gap-5 max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-3">
+            <div className="max-[600px]:w-full">
               <div className="mb-[9px] text-[9px] font-[650] tracking-[1.8px] text-[#819279]">
                 YOUR PEOPLE, AT A GLANCE
               </div>
@@ -99,19 +99,40 @@ export default function App() {
                       ? "Your departments"
                       : "Workforce analytics"}
               </h1>
-              <p className="mt-1.5 text-[12px] text-[#8a9487]">
+              <p className="mt-1 text-[10px] leading-[1.6] text-[#8c9487]">
                 A little clarity. A stronger team. Get to know your workforce.
               </p>
             </div>
-            <button
-              className="inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#28664f] bg-[#28664f] px-[15px] py-[11px] text-[11px] font-medium text-white shadow-[0_2px_3px_#28563a15] transition-colors hover:bg-[#1b513c]"
-              onClick={() => directory.exportReport()}
-            >
-              <Download size={15} />
-              {directory.selection
-                ? `Export ${directory.selection} selected`
-                : "Export report"}
-            </button>
+            <div className="max-[600px]:flex max-[600px]:w-full max-[600px]:justify-center">
+              <button
+                className={`inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#28664f] bg-[#28664f] px-[15px] py-[11px] text-[11px] font-medium text-white shadow-[0_2px_3px_#28563a15] transition-colors hover:bg-[#1b513c] ${directory.exporting ? "cursor-not-allowed opacity-90" : ""}`}
+                onClick={() => directory.exportReport()}
+                disabled={directory.exporting}
+                aria-label={
+                  directory.exporting
+                    ? "Exporting report..."
+                    : directory.selection
+                      ? `Export ${directory.selection} selected`
+                      : "Export report"
+                }
+              >
+                {directory.exporting ? (
+                  <>
+                    <LoaderCircle size={15} className="animate-spin" />
+                    <span>Exporting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download size={15} />
+                    <span>
+                      {directory.selection
+                        ? `Export ${directory.selection} selected`
+                        : "Export report"}
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
           <WorkforceSummary stats={stats} />
           {activeTab !== "Employees" && (

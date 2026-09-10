@@ -56,9 +56,12 @@ test("employee directory filters, pagination, profile, columns and export", asyn
   await page.getByLabel("Hire date", { exact: true }).check();
   await page.getByRole("button", { name: "Columns", exact: true }).click();
   const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Export report" }).click();
+  const exportBtn = page.getByRole("button", { name: "Export report" });
+  await exportBtn.click();
+  await expect(page.getByText("Exporting...")).toBeVisible();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe("factwise-employees.csv");
+  await expect(page.getByText("Exporting...")).not.toBeVisible();
   await page.getByLabel("Rows per page").selectOption("20");
   await expect(page.locator(".grid-footer")).toContainText("1–20");
   expect(errors).toEqual([]);
@@ -95,6 +98,83 @@ test("reopens an empty column filter with its value editable", async ({
   const reopenedFilter = page.getByLabel("Filter Value").first();
   await expect(reopenedFilter).toBeVisible();
   await expect(reopenedFilter).toHaveValue("no matching employee");
+  await reopenedFilter.click();
+  await page.screenshot({ path: "tests/reopened-filter.png" });
   await reopenedFilter.fill("John");
   await expect(reopenedFilter).toHaveValue("John");
+});
+
+test("closes columns dropdown on outside click", async ({ page }) => {
+  await page.goto("http://localhost:5173");
+  const columnsButton = page.getByRole("button", {
+    name: "Columns",
+    exact: true,
+  });
+
+  await columnsButton.click();
+  await expect(page.getByText("Visible columns")).toBeVisible();
+
+  // Clicking outside should close the dropdown
+  await page.getByRole("heading", { name: "Employee directory" }).click();
+  await expect(page.getByText("Visible columns")).not.toBeVisible();
+
+  // Re-open and test Escape key
+  await columnsButton.click();
+  await expect(page.getByText("Visible columns")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByText("Visible columns")).not.toBeVisible();
+});
+
+test("mobile view shows centered export button and cards fit without overflow", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto("http://localhost:5173");
+  await page.waitForLoadState("networkidle");
+
+  const exportBtn = page.getByRole("button", { name: "Export report" });
+  await expect(exportBtn).toBeVisible();
+
+  // Verify export button is centered in the content area
+  const btnBox = await exportBtn.boundingBox();
+  expect(btnBox).not.toBeNull();
+  const btnCenter = btnBox.x + btnBox.width / 2;
+  expect(btnCenter).toBeGreaterThan(180);
+  expect(btnCenter).toBeLessThan(250);
+
+  // Take screenshot for visual inspection
+  await page.screenshot({ path: "tests/mobile-view.png", fullPage: true });
+
+  // Verify no horizontal overflow in summary cards
+  const summaryCards = page.locator(
+    "section[aria-label='Workforce summary'] article",
+  );
+  const count = await summaryCards.count();
+  for (let i = 0; i < count; i++) {
+    const card = summaryCards.nth(i);
+    const box = await card.boundingBox();
+    expect(box.x + box.width).toBeLessThanOrEqual(375);
+  }
+});
+
+test("clicks clear all filters", async ({ page }) => {
+  await page.goto("http://localhost:5173");
+  const filterButton = page
+    .locator(".ag-header-cell")
+    .filter({ hasText: "Employee" })
+    .locator(".ag-header-icon")
+    .first();
+
+  await filterButton.click();
+  await page.getByLabel("Filter Value").first().fill("no matching employee");
+  await expect(
+    page.getByText("No employees match your filters."),
+  ).toBeVisible();
+
+  const clearButton = page.getByRole("button", { name: "Clear all filters" });
+  await clearButton.click();
+  await expect(
+    page.getByText("No employees match your filters."),
+  ).not.toBeVisible();
+  await expect(page.locator(".grid-footer")).toContainText("1–10");
 });

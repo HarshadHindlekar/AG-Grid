@@ -2,7 +2,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { EmployeeDirectoryProps } from "../../types/employeeDirectory";
 
 export function DirectoryPagination({ controller }: EmployeeDirectoryProps) {
-  const { grid, selection, count, page, pages, pageSize, setPageSize } = controller;
+  const { grid, selection, count, page, pages, pageSize, setPageSize } =
+    controller;
 
   return (
     <footer className="grid-footer flex items-center justify-between border-t border-[#e5eadd] px-5 py-3.5 text-[10px] text-[#97a087] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-2.5 max-[600px]:p-3">

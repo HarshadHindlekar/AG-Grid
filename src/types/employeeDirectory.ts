@@ -33,6 +33,7 @@ export interface EmployeeDirectoryController {
   cols: ColDef<Employee>[];
   updatePagination: () => void;
   reset: () => void;
+  exporting: boolean;
   exportReport: () => void;
 }
 

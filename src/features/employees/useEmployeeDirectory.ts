@@ -27,6 +27,7 @@ export function useEmployeeDirectory(
   const [count, setCount] = useState(employees.length);
   const [pageSize, setPageSize] = useState(10);
   const [selection, setSelection] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
   const employeeCounts = useMemo(
     () => ({
@@ -71,18 +72,28 @@ export function useEmployeeDirectory(
   }, []);
 
   const exportReport = useCallback(() => {
-    grid.current?.api.exportDataAsCsv({
-      fileName: "factwise-employees.csv",
-      onlySelected: selection > 0,
-      processCellCallback: (p) =>
-        Array.isArray(p.value)
-          ? p.value.join(", ")
-          : typeof p.value === "string" && /^[=+@\-\t\r]/.test(p.value)
-            ? `'${p.value}`
-            : p.value,
-    });
-  }, [selection]);
-  
+    if (exporting) return;
+    setExporting(true);
+    setTimeout(() => {
+      try {
+        grid.current?.api.exportDataAsCsv({
+          fileName: "factwise-employees.csv",
+          onlySelected: selection > 0,
+          processCellCallback: (p) =>
+            Array.isArray(p.value)
+              ? p.value.join(", ")
+              : typeof p.value === "string" && /^[=+@\-\t\r]/.test(p.value)
+                ? `'${p.value}`
+                : p.value,
+        });
+      } finally {
+        setTimeout(() => {
+          setExporting(false);
+        }, 600);
+      }
+    }, 200);
+  }, [exporting, selection]);
+
   return {
     grid,
     search,
@@ -111,6 +122,7 @@ export function useEmployeeDirectory(
     cols,
     updatePagination,
     reset,
+    exporting,
     exportReport,
   };
 }

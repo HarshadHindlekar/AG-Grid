@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import {
   Search,
   X,
@@ -25,7 +26,38 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
     setHidden,
     reset,
   } = controller;
-  
+
+  const columnsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showColumns) return;
+
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
+      if (
+        columnsRef.current &&
+        !columnsRef.current.contains(event.target as Node)
+      ) {
+        setShowColumns(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setShowColumns(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showColumns, setShowColumns]);
+
   return (
     <>
       <div className="flex items-center justify-between gap-[15px] p-4 px-5 max-[900px]:flex-wrap max-[900px]:gap-[5px] max-[600px]:p-4">
@@ -70,7 +102,7 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
               <i className="h-[5px] w-[5px] rounded-full bg-[#307754]" />
             )}
           </button>
-          <div className="relative">
+          <div className="relative" ref={columnsRef}>
             <button
               className="inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#e0e6dd] bg-white px-3 py-[9px] text-[11px] hover:bg-[#f1f6ef]"
               onClick={() => setShowColumns((value) => !value)}

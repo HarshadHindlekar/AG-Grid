@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ArrowUpRight, Search } from "lucide-react";
 import type { Employee } from "../../types/employee";
@@ -6,12 +7,45 @@ import { DirectoryToolbar } from "./DirectoryToolbar";
 import { DirectoryPagination } from "./DirectoryPagination";
 import type { EmployeeDirectoryProps } from "../../types/employeeDirectory";
 
+interface NoEmployeesOverlayProps {
+  reset?: () => void;
+  params?: {
+    reset?: () => void;
+  };
+  api?: {
+    setFilterModel: (model: null) => void;
+    applyColumnState: (params: { defaultState: { sort: null } }) => void;
+  };
+}
+
+function NoEmployeesOverlay(props: NoEmployeesOverlayProps) {
+  const onReset = () => {
+    props.reset?.();
+    props.params?.reset?.();
+    props.api?.setFilterModel(null);
+    props.api?.applyColumnState({ defaultState: { sort: null } });
+  };
+
+  return (
+    <div className="pointer-events-auto flex flex-col items-center justify-center gap-[15px] bg-white text-[12px] text-[#8d9c7c]">
+      <Search size={25} />
+      <strong className="font-medium">No employees match your filters.</strong>
+      <button
+        type="button"
+        className="cursor-pointer flex items-center gap-1.5 text-[10px] text-[#417a55] hover:underline"
+        onClick={onReset}
+      >
+        Clear all filters
+      </button>
+    </div>
+  );
+}
+
 export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
   const {
     grid,
     status,
     setStatus,
-    count,
     reset,
     rows,
     cols,
@@ -23,7 +57,15 @@ export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
     activeEmployees,
     inactiveEmployees,
   } = controller;
-  
+
+  const overlayComponentSelector = useCallback(
+    () => ({
+      component: NoEmployeesOverlay,
+      params: { reset },
+    }),
+    [reset],
+  );
+
   return (
     <section
       id="directory"
@@ -65,20 +107,6 @@ export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
       </div>
       <DirectoryToolbar controller={controller} />
       <div className="relative h-[694px] w-full">
-        {count === 0 && (
-          <div className="absolute inset-[43px_0_0] z-[5] flex flex-col items-center justify-center gap-[15px] bg-white text-[12px] text-[#8d9c7c]">
-            <Search size={25} />
-            <strong className="font-medium">
-              No employees match your filters.
-            </strong>
-            <button
-              className="flex items-center gap-1.5 text-[10px] text-[#417a55]"
-              onClick={reset}
-            >
-              Clear all filters
-            </button>
-          </div>
-        )}
         <AgGridReact<Employee>
           ref={grid}
           theme={gridTheme}
@@ -109,7 +137,7 @@ export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
           onSelectionChanged={() =>
             setSelection(grid.current?.api.getSelectedRows().length || 0)
           }
-          overlayNoRowsTemplate="<span>No employees match your filters.</span>"
+          overlayComponentSelector={overlayComponentSelector}
         />
       </div>
       <DirectoryPagination controller={controller} />
