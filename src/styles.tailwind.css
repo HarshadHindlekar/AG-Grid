@@ -14,3 +14,12 @@ body {
 body {
   margin: 0;
 }
+
+/* AG Grid appends filter popups outside the grid root. */
+.ag-popup {
+  position: absolute;
+}
+
+.ag-popup-child {
+  max-height: 80vh;
+}
