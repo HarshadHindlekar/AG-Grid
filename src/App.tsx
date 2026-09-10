@@ -48,12 +48,18 @@ export default function App() {
 
   function navigate(tab: DashboardTab) {
     setActiveTab(tab);
-    if (tab === "Employees")
-      document
-        .getElementById("directory")
-        ?.scrollIntoView({ behavior: "smooth" });
+    if (tab === "Employees") {
+      requestAnimationFrame(() => {
+        const directoryElement = document.getElementById("directory");
+        if (directoryElement) {
+          const top =
+            directoryElement.getBoundingClientRect().top + window.scrollY - 20;
+          window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        }
+      });
+    }
   }
-  
+
   return (
     <div className="flex min-h-screen bg-[#f6f8f5] font-sans text-[#293c32] antialiased">
       <Sidebar

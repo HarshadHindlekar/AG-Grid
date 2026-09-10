@@ -78,9 +78,17 @@ export function DepartmentInsights({
                 className="flex w-full items-center gap-[9px] py-[7px] text-left text-[10px] hover:bg-[#f6f8f3]"
                 onClick={() => {
                   setDepartment(department === d ? "All departments" : d);
-                  document
-                    .getElementById("directory")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  const directoryElement = document.getElementById("directory");
+                  if (directoryElement) {
+                    const top =
+                      directoryElement.getBoundingClientRect().top +
+                      window.scrollY -
+                      20;
+                    window.scrollTo({
+                      top: Math.max(0, top),
+                      behavior: "smooth",
+                    });
+                  }
                 }}
               >
                 <i
