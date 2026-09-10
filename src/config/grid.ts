@@ -1,0 +1,41 @@
+import {
+  ClientSideRowModelModule,
+  ColumnApiModule,
+  CsvExportModule,
+  ModuleRegistry,
+  NumberFilterModule,
+  PaginationModule,
+  QuickFilterModule,
+  RowApiModule,
+  RowSelectionModule,
+  TextFilterModule,
+  themeQuartz,
+} from "ag-grid-community";
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  ColumnApiModule,
+  CsvExportModule,
+  NumberFilterModule,
+  PaginationModule,
+  QuickFilterModule,
+  RowApiModule,
+  RowSelectionModule,
+  TextFilterModule,
+]);
+
+export const gridTheme = themeQuartz.withParams({
+  accentColor: "#26745e",
+  backgroundColor: "#ffffff",
+  foregroundColor: "#39443e",
+  borderColor: "#e8ece8",
+  headerBackgroundColor: "#f7f9f7",
+  headerTextColor: "#788179",
+  fontFamily: "Inter, sans-serif",
+  fontSize: 10,
+  headerFontSize: 10,
+  rowBorder: { color: "#edf0ed" },
+  wrapperBorder: false,
+  cellHorizontalPadding: 18,
+  selectedRowBackgroundColor: "#edf5ef",
+  checkboxBorderRadius: 4,
+});
