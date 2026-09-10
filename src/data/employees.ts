@@ -12,9 +12,17 @@ export const departments = [
 ];
 
 export const colors: Record<string, string> = {
-  Engineering: "#498e79",
-  Marketing: "#90b7a8",
-  Sales: "#c2d9bd",
-  HR: "#d8c99e",
-  Finance: "#929fae",
+  Engineering: "#10b981",
+  Marketing: "#6366f1",
+  Sales: "#f59e0b",
+  HR: "#ec4899",
+  Finance: "#06b6d4",
+};
+
+export const darkColors: Record<string, string> = {
+  Engineering: "#047857",
+  Marketing: "#4338ca",
+  Sales: "#b45309",
+  HR: "#be185d",
+  Finance: "#0e7490",
 };

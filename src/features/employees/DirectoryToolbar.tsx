@@ -60,11 +60,11 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-[15px] p-4 px-5 max-[900px]:flex-wrap max-[900px]:gap-[5px] max-[600px]:p-4">
-        <label className="flex w-[290px] items-center gap-2 rounded-[6px] border border-[#e2e7dc] px-2.5 py-2 text-[#9aa48e] max-[1150px]:w-[235px] max-[900px]:min-w-[220px] max-[900px]:flex-1">
-          <Search size={16} />
+      <div className="flex items-center justify-between gap-[15px] p-4 px-5 max-[900px]:flex-wrap max-[900px]:gap-[8px] max-[600px]:p-4">
+        <label className="flex w-[290px] items-center gap-2 rounded-[8px] border border-slate-200 bg-slate-50/70 px-3 py-2 text-slate-400 transition-colors focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/20 max-[1150px]:w-[235px] max-[900px]:min-w-[220px] max-[900px]:flex-1">
+          <Search size={15} />
           <input
-            className="w-full border-0 bg-transparent text-[10px] text-[#3e5139] outline-0 placeholder:text-[#a0a793]"
+            className="w-full border-0 bg-transparent text-[11px] text-slate-800 outline-0 placeholder:text-slate-400"
             aria-label="Search employees"
             placeholder="Search by name, email, or skill..."
             value={search}
@@ -72,7 +72,7 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
           />
           {search && (
             <button
-              className="flex p-0"
+              className="flex p-0 text-slate-400 hover:text-slate-600"
               onClick={() => setSearch("")}
               aria-label="Clear search"
             >
@@ -82,7 +82,7 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
         </label>
         <div className="flex gap-2 max-[900px]:flex-1 max-[900px]:justify-end max-[600px]:flex-wrap max-[600px]:justify-start">
           <select
-            className="rounded-[6px] border border-[#e2e7dc] bg-white px-3 py-2 text-[10px] text-[#78836c]"
+            className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[11px] font-medium text-slate-700 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
             aria-label="Filter department"
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
@@ -93,35 +93,38 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
             ))}
           </select>
           <button
-            className={`inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#e0e6dd] px-3 py-[9px] text-[11px] hover:bg-[#f1f6ef] ${showFilters ? "bg-[#eef4e9]" : "bg-white"}`}
+            className={`inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[8px] border px-3.5 py-[8px] text-[11px] font-medium shadow-sm transition-colors ${showFilters ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900"}`}
             onClick={() => setShowFilters((value) => !value)}
           >
             <SlidersHorizontal size={14} />
             Filters
             {location !== "All locations" && (
-              <i className="h-[5px] w-[5px] rounded-full bg-[#307754]" />
+              <i className="h-[6px] w-[6px] rounded-full bg-emerald-600 shadow-sm shadow-emerald-600/50" />
             )}
           </button>
           <div className="relative" ref={columnsRef}>
             <button
-              className="inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#e0e6dd] bg-white px-3 py-[9px] text-[11px] hover:bg-[#f1f6ef]"
+              className="inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[8px] border border-slate-200 bg-white px-3.5 py-[8px] text-[11px] font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900"
               onClick={() => setShowColumns((value) => !value)}
             >
               <PanelLeftClose size={14} />
               Columns
             </button>
             {showColumns && (
-              <div className="absolute right-0 top-[41px] z-30 w-[180px] rounded-[7px] border border-[#e3e8dd] bg-white p-[15px] text-[11px] shadow-[0_10px_30px_#23392024]">
-                <strong className="mb-2.5 block">Visible columns</strong>
+              <div className="absolute right-0 top-[42px] z-30 w-[190px] rounded-[10px] border border-slate-200 bg-white p-4 text-[11px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)]">
+                <strong className="mb-2.5 block font-bold text-slate-900">
+                  Visible columns
+                </strong>
                 {cols
                   .filter((c) => c.field)
                   .map((c) => (
                     <label
-                      className="flex items-center gap-2 py-1"
+                      className="flex cursor-pointer items-center gap-2 py-1 text-slate-700 hover:text-slate-900"
                       key={c.field}
                     >
                       <input
                         type="checkbox"
+                        className="accent-emerald-600"
                         checked={!hidden.includes(c.field!)}
                         onChange={() =>
                           setHidden((h) =>
@@ -141,11 +144,11 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
         </div>
       </div>
       {showFilters && (
-        <div className="flex items-center gap-5 px-5 pb-[15px] text-[11px] max-[900px]:flex-wrap">
-          <label className="flex items-center gap-2.5">
+        <div className="flex items-center gap-5 px-5 pb-[16px] text-[11px] max-[900px]:flex-wrap">
+          <label className="flex items-center gap-2.5 font-medium text-slate-600">
             Location{" "}
             <select
-              className="rounded-[6px] border border-[#e2e7dc] bg-white px-3 py-2 text-[10px] text-[#78836c]"
+              className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[11px] font-medium text-slate-700 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
               aria-label="Filter location"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -159,13 +162,13 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
             </select>
           </label>
           <button
-            className="flex items-center gap-1.5 text-[10px] text-[#417a55]"
+            className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline"
             onClick={reset}
           >
             <RotateCcw size={13} />
             Reset all filters & sorting
           </button>
-          <small className="text-[9px] text-[#939d86]">
+          <small className="text-[10px] text-slate-400">
             Use column menus for text and number filters.
           </small>
         </div>

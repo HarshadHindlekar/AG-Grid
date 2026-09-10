@@ -69,41 +69,56 @@ export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
   return (
     <section
       id="directory"
-      className="overflow-hidden rounded-[9px] border border-[#e1e6dc] bg-white"
+      className="overflow-hidden rounded-[14px] border border-slate-200/80 bg-white shadow-[0_4px_20px_-2px_rgba(0,0,0,0.05),0_2px_6px_-1px_rgba(0,0,0,0.03)]"
     >
       <div className="flex items-center justify-between px-[21px] pb-[19px] pt-[21px] max-[600px]:px-[14px] max-[600px]:py-[18px]">
         <div>
-          <h2 className="flex items-center gap-[9px] text-[13px] font-[650] tracking-[-.1px]">
+          <h2 className="flex items-center gap-[9px] text-[14px] font-[750] tracking-[-.15px] text-slate-900">
             Employee directory{" "}
-            <span className="rounded-xl bg-[#f0f4eb] px-[7px] py-[3px] text-[9px] font-normal text-[#7d9070]">
+            <span className="rounded-full border border-emerald-200/90 bg-emerald-50/90 px-2.5 py-[2px] text-[10px] font-bold text-emerald-800">
               {totalEmployees} members
             </span>
           </h2>
-          <p className="mt-1.5 text-[10px] text-[#929a8c]">
+          <p className="mt-1 text-[11px] text-slate-500">
             The people behind the progress.
           </p>
         </div>
-        <span className="flex items-center gap-1 text-[9px] text-[#9ba590] max-[600px]:hidden">
+        <span className="flex items-center gap-1 text-[10px] font-medium text-slate-400 max-[600px]:hidden">
           Click a name to explore their profile <ArrowUpRight size={13} />
         </span>
       </div>
-      <div className="flex gap-[22px] border-b border-[#e7ece1] px-5 max-[600px]:gap-4 max-[600px]:px-[14px]">
-        {["All employees", "Active", "Inactive"].map((s) => (
-          <button
-            key={s}
-            className={`relative flex items-center gap-[7px] px-px pb-3 text-[11px] ${status === s ? "font-semibold text-[#376b48] after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-[#527c46]" : "text-[#919a88]"}`}
-            onClick={() => setStatus(s)}
-          >
-            {s}
-            <span className="rounded border border-[#edf0e8] bg-[#f4f6ef] px-[5px] py-px text-[9px]">
-              {s === "All employees"
-                ? totalEmployees
-                : s === "Active"
-                  ? activeEmployees
-                  : inactiveEmployees}
-            </span>
-          </button>
-        ))}
+      <div className="flex gap-[22px] border-b border-slate-200 px-5 max-[600px]:gap-4 max-[600px]:px-[14px]">
+        {["All employees", "Active", "Inactive"].map((s) => {
+          const isActive = status === s;
+          const count =
+            s === "All employees"
+              ? totalEmployees
+              : s === "Active"
+                ? activeEmployees
+                : inactiveEmployees;
+          return (
+            <button
+              key={s}
+              className={`relative flex items-center gap-[7px] px-px pb-3 text-[12px] transition-colors ${
+                isActive
+                  ? "font-bold text-emerald-800 after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2.5px] after:rounded-t-full after:bg-emerald-600"
+                  : "font-medium text-slate-500 hover:text-slate-900"
+              }`}
+              onClick={() => setStatus(s)}
+            >
+              {s}
+              <span
+                className={`rounded-full px-2 py-0.5 text-[9.5px] ${
+                  isActive
+                    ? "bg-emerald-100 font-bold text-emerald-800"
+                    : "bg-slate-100 font-medium text-slate-600"
+                }`}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
       </div>
       <DirectoryToolbar controller={controller} />
       <div className="relative h-[694px] w-full">

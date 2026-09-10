@@ -24,18 +24,18 @@ ModuleRegistry.registerModules([
 ]);
 
 export const gridTheme = themeQuartz.withParams({
-  accentColor: "#26745e",
+  accentColor: "#059669",
   backgroundColor: "#ffffff",
-  foregroundColor: "#39443e",
-  borderColor: "#e8ece8",
-  headerBackgroundColor: "#f7f9f7",
-  headerTextColor: "#788179",
+  foregroundColor: "#1e293b",
+  borderColor: "#e2e8f0",
+  headerBackgroundColor: "#f8fafc",
+  headerTextColor: "#475569",
   fontFamily: "Inter, sans-serif",
   fontSize: 10,
   headerFontSize: 10,
-  rowBorder: { color: "#edf0ed" },
+  rowBorder: { color: "#f1f5f9" },
   wrapperBorder: false,
   cellHorizontalPadding: 18,
-  selectedRowBackgroundColor: "#edf5ef",
+  selectedRowBackgroundColor: "#ecfdf5",
   checkboxBorderRadius: 4,
 });

@@ -61,7 +61,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#f6f8f5] font-sans text-[#293c32] antialiased">
+    <div className="flex min-h-screen bg-[#f8fafc] font-sans text-slate-900 antialiased">
       <Sidebar
         activeTab={activeTab}
         collapsed={collapsed}
@@ -73,24 +73,26 @@ export default function App() {
       <div
         className={`${collapsed ? "ml-[76px] w-[calc(100%-76px)]" : "ml-[228px] w-[calc(100%-228px)]"} max-[1150px]:ml-[195px] max-[1150px]:w-[calc(100%-195px)] max-[900px]:ml-[76px] max-[900px]:w-[calc(100%-76px)] max-[600px]:ml-[55px] max-[600px]:w-[calc(100%-55px)]`}
       >
-        <header className="flex h-[66px] items-center justify-between border-b border-[#e5e9e2] bg-white px-[34px] text-[11px] text-[#949a91] max-[600px]:h-[53px] max-[600px]:px-[17px]">
+        <header className="flex h-[66px] items-center justify-between border-b border-slate-200/80 bg-white px-[34px] text-[11px] text-slate-500 max-[600px]:h-[53px] max-[600px]:px-[17px]">
           <div className="flex items-center gap-[15px]">
             <span>Workspace</span>
-            <ChevronRight size={13} />
-            <strong className="font-medium text-[#4d594e]">{activeTab}</strong>
+            <ChevronRight size={13} className="text-slate-400" />
+            <strong className="font-semibold text-slate-800">
+              {activeTab}
+            </strong>
           </div>
-          <span className="flex items-center gap-[7px] text-[10px] max-[600px]:hidden">
-            <i className="h-[5px] w-[5px] rounded-full bg-[#72a685]" />
+          <span className="flex items-center gap-[7px] text-[10px] font-medium text-slate-500 max-[600px]:hidden">
+            <i className="h-[6px] w-[6px] rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
             Workspace overview
           </span>
         </header>
-        <main className="mx-auto max-w-[1680px] px-[34px] pb-[18px] pt-[31px] max-[1150px]:px-[22px] max-[1150px]:py-[25px] max-[600px]:px-[14px] max-[600px]:py-[22px] min-[1500px]:pt-[38px]">
+        <main className="mx-auto max-w-[1680px] px-[34px] pb-[24px] pt-[31px] max-[1150px]:px-[22px] max-[1150px]:py-[25px] max-[600px]:px-[14px] max-[600px]:py-[22px] min-[1500px]:pt-[38px]">
           <div className="mb-[27px] flex items-center justify-between gap-5 max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-3">
             <div className="max-[600px]:w-full">
-              <div className="mb-[9px] text-[9px] font-[650] tracking-[1.8px] text-[#819279]">
+              <div className="mb-[8px] text-[10px] font-[750] tracking-[1.8px] text-emerald-700">
                 YOUR PEOPLE, AT A GLANCE
               </div>
-              <h1 className="font-display text-[29px] font-[750] leading-[1.4] tracking-[-1.15px] max-[600px]:text-[26px]">
+              <h1 className="font-display text-[30px] font-[800] leading-[1.35] tracking-[-1.15px] text-slate-900 max-[600px]:text-[26px]">
                 {activeTab === "Overview"
                   ? "People overview"
                   : activeTab === "Employees"
@@ -99,13 +101,13 @@ export default function App() {
                       ? "Your departments"
                       : "Workforce analytics"}
               </h1>
-              <p className="mt-1 text-[10px] leading-[1.6] text-[#8c9487]">
+              <p className="mt-1 text-[11px] leading-[1.6] text-slate-500">
                 A little clarity. A stronger team. Get to know your workforce.
               </p>
             </div>
             <div className="max-[600px]:flex max-[600px]:w-full max-[600px]:justify-center">
               <button
-                className={`inline-flex min-h-[34px] items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-[#28664f] bg-[#28664f] px-[15px] py-[11px] text-[11px] font-medium text-white shadow-[0_2px_3px_#28563a15] transition-colors hover:bg-[#1b513c] ${directory.exporting ? "cursor-not-allowed opacity-90" : ""}`}
+                className={`inline-flex min-h-[36px] items-center justify-center gap-2 whitespace-nowrap rounded-[8px] bg-gradient-to-r from-emerald-600 to-teal-700 px-[16px] py-[10px] text-[11px] font-semibold text-white shadow-md shadow-emerald-700/20 transition-all duration-200 hover:from-emerald-500 hover:to-teal-600 hover:shadow-lg hover:shadow-emerald-700/25 active:translate-y-0.5 ${directory.exporting ? "cursor-not-allowed opacity-90" : ""}`}
                 onClick={() => directory.exportReport()}
                 disabled={directory.exporting}
                 aria-label={
