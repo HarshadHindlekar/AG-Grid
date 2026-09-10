@@ -2,6 +2,7 @@ import { workforceMetrics } from "../../config/workforceMetrics";
 import type { WorkforceSummaryProps } from "../../types/dashboard";
 
 export function WorkforceSummary({ stats }: WorkforceSummaryProps) {
+  
   return (
     <section
       className="mb-[21px] grid grid-cols-4 gap-4 max-[900px]:gap-2.5 max-[600px]:grid-cols-2 min-[1500px]:gap-5"

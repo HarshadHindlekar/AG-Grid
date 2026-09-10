@@ -9,17 +9,21 @@ import { DepartmentInsights } from "./features/dashboard/DepartmentInsights";
 import { useWorkforceStats } from "./features/dashboard/useWorkforceStats";
 import { EmployeeDirectory } from "./features/employees/EmployeeDirectory";
 import { useEmployeeDirectory } from "./features/employees/useEmployeeDirectory";
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("Overview");
   const [collapsed, setCollapsed] = useState(false);
   const [help, setHelp] = useState(false);
   const [selected, setSelected] = useState<Employee | null>(null);
+
   const returnFocusRef = useRef<HTMLElement | null>(null);
+
   const rememberFocus = useCallback(() => {
     const activeElement = document.activeElement;
     returnFocusRef.current =
       activeElement instanceof HTMLElement ? activeElement : null;
   }, []);
+
   const openEmployee = useCallback(
     (employee: Employee) => {
       rememberFocus();
@@ -27,17 +31,21 @@ export default function App() {
     },
     [rememberFocus],
   );
+
   const openHelp = useCallback(() => {
     rememberFocus();
     setHelp(true);
   }, [rememberFocus]);
+
   const closeDialog = useCallback(() => {
     setSelected(null);
     setHelp(false);
     requestAnimationFrame(() => returnFocusRef.current?.focus());
   }, []);
+
   const directory = useEmployeeDirectory(openEmployee);
   const stats = useWorkforceStats();
+
   function navigate(tab: DashboardTab) {
     setActiveTab(tab);
     if (tab === "Employees")
@@ -45,6 +53,7 @@ export default function App() {
         .getElementById("directory")
         ?.scrollIntoView({ behavior: "smooth" });
   }
+  
   return (
     <div className="flex min-h-screen bg-[#f6f8f5] font-sans text-[#293c32] antialiased">
       <Sidebar

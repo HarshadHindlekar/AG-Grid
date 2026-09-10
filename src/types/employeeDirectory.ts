@@ -2,6 +2,7 @@ import type { Dispatch, RefObject, SetStateAction } from "react";
 import type { AgGridReact } from "ag-grid-react";
 import type { ColDef } from "ag-grid-community";
 import type { Employee } from "./employee";
+
 export interface EmployeeDirectoryController {
   grid: RefObject<AgGridReact<Employee> | null>;
   search: string;
@@ -34,6 +35,7 @@ export interface EmployeeDirectoryController {
   reset: () => void;
   exportReport: () => void;
 }
+
 export interface EmployeeDirectoryProps {
   controller: EmployeeDirectoryController;
 }

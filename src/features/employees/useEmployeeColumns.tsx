@@ -128,6 +128,7 @@ export function useEmployeeColumns(
         valueFormatter: (p) => p.value.join(", "),
       },
     ];
+    
     return definitions.map((c) => ({
       ...c,
       hide: hidden.includes(c.field || ""),

@@ -5,6 +5,7 @@ import { gridTheme } from "../../config/grid";
 import { DirectoryToolbar } from "./DirectoryToolbar";
 import { DirectoryPagination } from "./DirectoryPagination";
 import type { EmployeeDirectoryProps } from "../../types/employeeDirectory";
+
 export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
   const {
     grid,
@@ -22,6 +23,7 @@ export function EmployeeDirectory({ controller }: EmployeeDirectoryProps) {
     activeEmployees,
     inactiveEmployees,
   } = controller;
+  
   return (
     <section
       id="directory"

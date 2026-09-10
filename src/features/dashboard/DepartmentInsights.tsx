@@ -9,12 +9,14 @@ export function DepartmentInsights({
   setDepartment,
 }: DepartmentInsightsProps) {
   const totalEmployees = employees.length || 1;
+
   const departmentCounts = departments.map((departmentName) => ({
     name: departmentName,
     count: employees.filter(
       (employee) => employee.department === departmentName,
     ).length,
   }));
+
   const departmentCount = departmentCounts.filter(
     ({ count }) => count > 0,
   ).length;
@@ -24,6 +26,7 @@ export function DepartmentInsights({
         `${name} ${Math.round((count / totalEmployees) * 100)}%`,
     )
     .join(", ");
+
   const donutStops = departmentCounts.reduce(
     (result, { name, count }) => {
       const start = result.cursor;
@@ -35,6 +38,7 @@ export function DepartmentInsights({
     },
     { cursor: 0, stops: [] as string[] },
   ).stops;
+
   return (
     <section className="mb-[25px] grid grid-cols-2 gap-[19px] max-[900px]:gap-3 max-[600px]:grid-cols-1 min-[1500px]:mb-7">
       <article className="rounded-[9px] border border-[#e1e7dc] bg-white p-5 transition-shadow duration-200 hover:shadow-md">

@@ -4,10 +4,12 @@ import { AgGridReact } from "ag-grid-react";
 import type { Employee } from "../../types/employee";
 import { employees } from "../../data/employees";
 import { useEmployeeColumns } from "./useEmployeeColumns";
+
 export function useEmployeeDirectory(
   onSelect: (employee: Employee) => void,
 ): EmployeeDirectoryController {
   const grid = useRef<AgGridReact<Employee>>(null);
+
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("All departments");
   const [status, setStatus] = useState("All employees");
@@ -25,6 +27,7 @@ export function useEmployeeDirectory(
   const [count, setCount] = useState(employees.length);
   const [pageSize, setPageSize] = useState(10);
   const [selection, setSelection] = useState(0);
+
   const employeeCounts = useMemo(
     () => ({
       totalEmployees: employees.length,
@@ -34,6 +37,7 @@ export function useEmployeeDirectory(
     }),
     [],
   );
+
   const rows = useMemo(
     () =>
       employees.filter(
@@ -47,6 +51,7 @@ export function useEmployeeDirectory(
   );
 
   const cols = useEmployeeColumns(hidden, onSelect);
+
   const updatePagination = useCallback(() => {
     const api = grid.current?.api;
     if (api) {
@@ -55,6 +60,7 @@ export function useEmployeeDirectory(
       setCount(api.getDisplayedRowCount());
     }
   }, []);
+
   const reset = useCallback(() => {
     setSearch("");
     setDepartment("All departments");
@@ -76,6 +82,7 @@ export function useEmployeeDirectory(
             : p.value,
     });
   }, [selection]);
+  
   return {
     grid,
     search,

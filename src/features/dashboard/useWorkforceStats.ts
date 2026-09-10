@@ -18,5 +18,6 @@ export function useWorkforceStats(): WorkforceStats {
     }),
     [],
   );
+  
   return stats;
 }

@@ -25,6 +25,7 @@ export function DirectoryToolbar({ controller }: EmployeeDirectoryProps) {
     setHidden,
     reset,
   } = controller;
+  
   return (
     <>
       <div className="flex items-center justify-between gap-[15px] p-4 px-5 max-[900px]:flex-wrap max-[900px]:gap-[5px] max-[600px]:p-4">

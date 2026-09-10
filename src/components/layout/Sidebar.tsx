@@ -27,6 +27,7 @@ export function Sidebar({
     { name: "Departments", icon: Building2 },
     { name: "Analytics", icon: ChartNoAxesCombined },
   ];
+  
   return (
     <aside
       className={`${collapsed ? "w-[76px] px-2.5" : "w-[228px] px-[18px]"} fixed inset-y-0 left-0 z-20 flex flex-col border-r border-[#e4e9e2] bg-white pt-[29px] transition-[width] duration-200 ease-out max-[1150px]:w-[195px] max-[1150px]:px-3 max-[900px]:w-[76px] max-[900px]:px-2.5 max-[600px]:w-[55px] max-[600px]:px-1 max-[600px]:pt-[22px]`}

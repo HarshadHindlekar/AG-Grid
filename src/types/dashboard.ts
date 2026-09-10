@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { DashboardTab } from "./navigation";
+
 export interface WorkforceStats {
   total: number;
   departmentCount: number;
